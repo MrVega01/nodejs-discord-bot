@@ -7,7 +7,8 @@ const client = new Client({
         GatewayIntentBits.MessageContent
     ]
 });
-const config = require(`${process.cwd()}/config.json`);
+// FOR DEV const config = require(`${process.cwd()}/config.json`);
+const config = require(`${process.cwd()}/utils/credentials.js`);
 const {searchPoke} = require(`${process.cwd()}/utils/pokeHandler.js`);
 
 const {token, prefix} = config;
@@ -35,24 +36,24 @@ client.on('messageCreate', async (message) => {
         .setTitle(stringUppercase(pokeInfo.name))
 
         .setDescription(`
-        📱 National Dex: ${pokeInfo.id}
+📱 National Dex: ${pokeInfo.id}
 
-        📏 Height: ${(pokeInfo.height*0.1).toFixed(2)}mts
-        ⚖️ Weight: ${(pokeInfo.weight*0.1).toFixed(2)}kg
+📏 Height: ${(pokeInfo.height*0.1).toFixed(2)}mts
+⚖️ Weight: ${(pokeInfo.weight*0.1).toFixed(2)}kg
 
-        Stats:
+Stats:
 
-        ${pokeInfo.stats.map(stat=>{
-                let statPrint;
-                if(stat.stat.name === 'hp') statPrint = '❤️ HP';
-                else if(stat.stat.name === 'attack') statPrint = '⚔️ Attack';
-                else if(stat.stat.name === 'defense') statPrint = '🛡️ Defense';
-                else if(stat.stat.name === 'special-attack') statPrint = '✨ Special Attack';
-                else if(stat.stat.name === 'special-defense') statPrint = '🎈 Special Defense';
-                else if(stat.stat.name === 'speed') statPrint = '⚡ Speed';
-                return `${statPrint}: ${stat.base_stat}`
-            }).join('\n')
-        }
+${pokeInfo.stats.map(stat=>{
+        let statPrint;
+        if(stat.stat.name === 'hp') statPrint = '❤️ HP';
+        else if(stat.stat.name === 'attack') statPrint = '⚔️ Attack';
+        else if(stat.stat.name === 'defense') statPrint = '🛡️ Defense';
+        else if(stat.stat.name === 'special-attack') statPrint = '✨ Special Attack';
+        else if(stat.stat.name === 'special-defense') statPrint = '🎈 Special Defense';
+        else if(stat.stat.name === 'speed') statPrint = '⚡ Speed';
+        return `${statPrint}: ${stat.base_stat}`
+    }).join('\n')
+}
         `)
 
         .setImage(pokeInfo.sprites.other['official-artwork'].front_default || pokeInfo.sprites.other.home.front_default)
