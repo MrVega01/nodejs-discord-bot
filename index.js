@@ -18,7 +18,7 @@ client.on('ready', ()=>{
 });
 client.on('messageCreate', async (message) => {
     if(message.author.bot || message.channel.type === 'dm') return;
-    if(!message.content.startsWith(prefix)) return;
+    if(!message.content.toLowerCase().startsWith(prefix)) return;
 
     let command;
     let arguments = [];
@@ -30,6 +30,7 @@ client.on('messageCreate', async (message) => {
     //Creating message
     if(command === 'search'){
         const pokeInfo = await searchPoke(arguments[0]);
+        if(!pokeInfo) return message.reply('No pokemon found!');
         console.log(pokeInfo, 'msg');
         const embed = new EmbedBuilder()
 
